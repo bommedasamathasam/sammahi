@@ -1,0 +1,55 @@
+34) select avg(age) from Sailors
+  2  where rating in(select s.rating from Sailors s group by s.rating having count(s.rating)>=2);
+
+  AVG(AGE)
+----------
+    37.875
+
+35,36)SQL> select avg(age) from Sailors
+  2  where age>18 and rating in(select s.rating from Sailors s group by s.rating having count(s.rating)>=2);
+
+  AVG(AGE)
+----------
+        41
+
+32)SQL> select min(age) from Sailors
+  2  where age>18 and rating in(select s.rating from Sailors s group by s.rating having count(s.rating)>=2);
+
+  MIN(AGE)
+----------
+16) select s.sid from Sailors s,Reserves r,Boats b
+  2  where s.sid=r.sid and b.bid=r.bid and b.color='red' ;
+
+       SID
+----------
+        22
+        31
+        64
+        22
+        31
+
+21)SQL> select sname from Sailors s,Reserves r,Boats b
+  2  where s.sid=r.sid and b.bid=r.bid and b.color!='red' ;
+
+SNAME
+-------------------------
+Dustin
+Horatio
+Dustin
+Lubber
+33)select count(s.sid) from Sailors s,Reserves r,Boats b
+  2  where s.sid=r.sid and b.bid=r.bid and b.color='red';
+
+COUNT(S.SID)
+------------
+           5
+19) select s.sid from Sailors s,Reserves r,Boats b
+  2  where s.sid=r.sid and b.bid=r.bid and b.color='red' and b.color!='green';
+
+       SID
+----------
+        22
+        31
+        64
+        22
+        31

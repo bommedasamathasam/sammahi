@@ -1,0 +1,408 @@
+ select * from emp
+  2  where mgr=(select empno from emp
+  3  where ename='BLAKE');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7844 TURNER     SALESMAN        7698 08-SEP-81      15000
+        30
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+
+SQL> select e.empno,e.ename from emp e,emp d
+  2  where e.mgr=d.empno and e.hiredate<d.hiredate;
+
+     EMPNO ENAME
+---------- ----------
+      7521 WARD
+      7499 ALLEN
+      7782 CLARK
+      7698 BLAKE
+      7566 JONES
+      7369 SMITH
+
+6 rows selected.
+
+SQL> select ename,loc from emp,dept
+  2  where emp.ename='SMITH' and emp.deptno=dept.deptno;
+
+ENAME      LOC
+---------- -------------
+SMITH      Dallos
+
+SQL> select empno,ename,job,mgr,hiredate,sal,comm,e.deptno,dname,loc from emp e,dept d
+  2  where e.deptno=d.deptno and d.dname='ACCOUNTING' or d.dname='REASEARCH'
+  3  order by e.deptno;
+
+no rows selected
+
+SQL> select e.empno,e.ename,e.job,e.mgr,e.hiredate,e.sal,e.comm,e.deptno,d.dname,d.loc from emp e,dept d
+  2  where e.deptno=d.deptno and d.dname='ACCOUNTING' or d.dname='REASEARCH'
+  3  order by e.deptno;
+
+no rows selected
+
+SQL> select e.empno,e.ename,e.hiredate from emp e,dept d
+  2  where e.mgr=d.empno and e.hiredate<d.hiredate;
+where e.mgr=d.empno and e.hiredate<d.hiredate
+                                   *
+ERROR at line 2:
+ORA-00904: "D"."HIREDATE": invalid identifier
+
+
+SQL> select e.empno,e.ename,e.hiredate from emp e,dept d
+  2  order by e.deptno;
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7782 CLARK      09-JUN-81
+      7782 CLARK      09-JUN-81
+      7839 KING       17-NOV-81
+      7939 MILLER     23-JAN-82
+      7939 MILLER     23-JAN-82
+      7782 CLARK      09-JUN-81
+      7782 CLARK      09-JUN-81
+      7839 KING       17-NOV-81
+      7839 KING       17-NOV-81
+      7839 KING       17-NOV-81
+      7939 MILLER     23-JAN-82
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7939 MILLER     23-JAN-82
+      7566 JONES      02-APR-81
+      7369 SMITH      17-DEC-80
+      7902 FORD       03-DEC-81
+      7876 ADAMS      12-JAN-83
+      7788 SCOTT      09-DEC-82
+      7566 JONES      02-APR-81
+      7369 SMITH      17-DEC-80
+      7902 FORD       03-DEC-81
+      7876 ADAMS      12-JAN-83
+      7788 SCOTT      09-DEC-82
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7566 JONES      02-APR-81
+      7369 SMITH      17-DEC-80
+      7902 FORD       03-DEC-81
+      7876 ADAMS      12-JAN-83
+      7788 SCOTT      09-DEC-82
+      7566 JONES      02-APR-81
+      7369 SMITH      17-DEC-80
+      7902 FORD       03-DEC-81
+      7876 ADAMS      12-JAN-83
+      7788 SCOTT      09-DEC-82
+      7654 MARTIN     28-SEP-81
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7698 BLAKE      01-MAY-81
+      7900 JAMES      03-DEC-81
+      7654 MARTIN     28-SEP-81
+      7844 TURNER     08-SEP-81
+      7844 TURNER     08-SEP-81
+      7900 JAMES      03-DEC-81
+      7900 JAMES      03-DEC-81
+      7521 WARD       22-FEB-81
+      7698 BLAKE      01-MAY-81
+      7844 TURNER     08-SEP-81
+      7698 BLAKE      01-MAY-81
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7521 WARD       22-FEB-81
+      7499 ALLEN      20-FEB-81
+      7654 MARTIN     28-SEP-81
+      7499 ALLEN      20-FEB-81
+      7499 ALLEN      20-FEB-81
+      7900 JAMES      03-DEC-81
+      7521 WARD       22-FEB-81
+      7844 TURNER     08-SEP-81
+      7521 WARD       22-FEB-81
+      7499 ALLEN      20-FEB-81
+      7654 MARTIN     28-SEP-81
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7698 BLAKE      01-MAY-81
+
+56 rows selected.
+
+SQL> select e.empno,e.ename,e.hiredate from emp e,emp d
+  2  where e.mgr=d.empno and e.hiredate<d.hiredate;
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7521 WARD       22-FEB-81
+      7499 ALLEN      20-FEB-81
+      7782 CLARK      09-JUN-81
+      7698 BLAKE      01-MAY-81
+      7566 JONES      02-APR-81
+      7369 SMITH      17-DEC-80
+
+6 rows selected.
+
+SQL> select * from emp
+  2  where deotno=20 and job=any(select job from emp where deptno=10);
+where deotno=20 and job=any(select job from emp where deptno=10)
+      *
+ERROR at line 2:
+ORA-00904: "DEOTNO": invalid identifier
+
+
+SQL> select * from emp
+  2  where deptno=20 and job=any(select job from emp where deptno=10);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100
+        20
+
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+
+SQL> select job,sum(12*sal) from emp
+  2  where hiredate like '%81%'
+  3  group by job;
+
+JOB       SUM(12*SAL)
+--------- -----------
+SALESMAN       229200
+CLERK           11400
+PRESIDENT       60000
+MANAGER         99300
+ANALYST         36000
+
+
+SQL> select job,count(*),deptno from emp
+  2  group by job,deptno
+  3  order by deptno;
+
+JOB         COUNT(*)     DEPTNO
+--------- ---------- ----------
+CLERK              1         10
+MANAGER            1         10
+PRESIDENT          1         10
+ANALYST            2         20
+CLERK              2         20
+MANAGER            1         20
+CLERK              1         30
+MANAGER            1         30
+SALESMAN           4         30
+
+9 rows selected.
+
+SQL> select mgr,count(*) from emp
+  2  group by mgr
+  3  order by mgr;
+
+       MGR   COUNT(*)
+---------- ----------
+      7566          2
+      7698          5
+      7782          1
+      7788          1
+      7839          3
+      7902          1
+                    1
+
+7 rows selected.
+
+SQL> select deptno,count(*) from emp
+  2  group by deptno
+  3  having count(*)>=2;
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          6
+        20          5
+        10          3
+SQL> select * from dept
+  2  where deptno in(select deptno from emp
+  3  group by deptno
+  4  having count(deptno)=(select max(count(deptno)) from emp group by deptno));
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        30 Sales          Chicago
+
+SQL> select deptno,count(*) from emp
+  2  group by deptno
+  3  having count(*)>=3;
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          6
+        20          5
+        10          3
+
+
+SQL> select dname,count(*) from emp e,dept d
+  2  where e.deptno=d.deptno
+  3  group by d.dname having count(*)>=3;
+
+DNAME            COUNT(*)
+-------------- ----------
+Accounting              3
+Reasearch               5
+Sales                   6
+
+
+SQL> select d.dname from dept d,emp e
+  2  where e.deptno=d.deptno
+  3  group by d.dname
+  4  having count(*)>(select avg(count(*)) from emp group by deptno);
+
+DNAME
+--------------
+Reasearch
+Sales
+
+SQL> select e2.ename,count(*) from emp e1,emp e2
+  2  where e1.mgr=e2.empno
+  3  group by e2.ename
+  4  having count(*)=(select max(count(*)) from emp e1,emp e2 where e1.mgr=e2.empno group by e2.ename);
+
+ENAME        COUNT(*)
+---------- ----------
+BLAKE               5
+
+SQL> select ename,job,sal from emp
+  2  where sal in(select min(sal) from emp group by job)
+  3  order by sal;
+
+ENAME      JOB              SAL
+---------- --------- ----------
+SMITH      CLERK            800
+MARTIN     SALESMAN        1250
+WARD       SALESMAN        1250
+CLARK      MANAGER         2450
+SCOTT      ANALYST         3000
+FORD       ANALYST         3000
+KING       PRESIDENT       5000
+
+7 rows selected.
+
+SQL> select ename,job,sal from emp
+  2  where sal in(select max(sal) from emp group by job)
+  3  order by sal desc;
+
+ENAME      JOB              SAL
+---------- --------- ----------
+TURNER     SALESMAN       15000
+KING       PRESIDENT       5000
+SCOTT      ANALYST         3000
+FORD       ANALYST         3000
+JONES      MANAGER         2975
+MILLER     CLERK           1300
+
+6 rows selected.
+SQL> select e1.ename,e1.sal,e1.deptno from emp e1
+  2  where e1.sal>(select avg(sal) from emp
+  3  where deptno=e.deptno
+  4  group by deptno)
+  5  order by deptno;
+where deptno=e.deptno
+             *
+ERROR at line 3:
+SQL> select e1.ename,e1.sal,e1.deptno from emp e1
+  2  where e1.sal>(select avg(sal) from emp
+  3  where deptno=e1.deptno
+  4  group by deptno)
+  5  order by deptno;
+
+ENAME             SAL     DEPTNO
+---------- ---------- ----------
+KING             5000         10
+SCOTT            3000         20
+FORD             3000         20
+JONES            2975         20
+TURNER          15000         30
+
+SQL> select e.ename,e.hiredate,e.deptno from emp e
+  2  where e.hiredate=(select max(hiredate) from emp where e.deptno=deptno group by deptno)
+  3  order by hiredate;
+
+ENAME      HIREDATE      DEPTNO
+---------- --------- ----------
+JAMES      03-DEC-81         30
+MILLER     23-JAN-82         10
+ADAMS      12-JAN-83         20
+
+
+
+SQL> select deptno from dept
+  2  where deptno not in(select deptno from emp
+  3  group by deptno
+  4  having count(*)!=0);
+
+    DEPTNO
+----------
+        40
+
+SQL> select count(empno),avg(sal),job,deptno from emp
+  2  group by deptno,job
+  3  order by job,deptno;
+
+COUNT(EMPNO)   AVG(SAL) JOB           DEPTNO
+------------ ---------- --------- ----------
+           2       3000 ANALYST           20
+           1       1300 CLERK             10
+           2        950 CLERK             20
+           1        950 CLERK             30
+           1       2450 MANAGER           10
+           1       2975 MANAGER           20
+           1       2850 MANAGER           30
+           1       5000 PRESIDENT         10
+           4       4775 SALESMAN          30
+
+9 rows selected.
+
+
+
+SQL> select max(avg(sal)) from emp
+  2  where job not like 'PRESIDENT'
+  3  group by job;
+
+MAX(AVG(SAL))
+-------------
+         4775
+
+SQL> select deptno,avg(sal) from emp
+  2  group by deptno
+  3  having avg(sal)<(select avg(avg(sal)) from emp
+  4  group by deptno);
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        20       2175
+        10 2916.66667
+
+SQL> commit;
+
+Commit complete.
